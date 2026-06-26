@@ -86,11 +86,27 @@ Console.WriteLine("Hello, World!");
 //    Console.WriteLine(dr[columnName: "BlogContent"]);
 //}
 
-AdoDotNetExample adoDotNetExample = new AdoDotNetExample();
+// => ADO.Net
+//AdoDotNetExample adoDotNetExample = new AdoDotNetExample();
 // adoDotNetExample.Read();
 // adoDotNetExample.Create();
 //adoDotNetExample.Edit();
-adoDotNetExample.Update();
+//adoDotNetExample.Update();
+//adoDotNetExample.Delete();
+
+
+//=> Dapper
+// DapperExample dapperExample = new DapperExample();
+// dapperExample.Read();
+// dapperExample.Create("thetitle","theauthor","thecontent");
+// dapperExample.Edit(4);
+// dapperExample.Edit(5);
+
+EFCoreExample eFCoreExample = new EFCoreExample();
+//eFCoreExample.Read();
+eFCoreExample.Create("EFCoreCreate","2.EFcore","3.EFCORE");
+
+
 
 Console.ReadKey();
 

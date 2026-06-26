@@ -1,0 +1,135 @@
+﻿using KHNDotNetCoreTraining.ConsoleApp.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+
+namespace KHNDotNetCoreTraining.ConsoleApp
+{
+    public class EFCoreExample
+    {
+         public void Read()
+        {
+            // In EFCore , no need to create query object like in ADO.NET, use the DbContext object to query the data from the table.
+            // The DbContext object is the main object that is used to query the data from the table.
+            AppDbContext db = new AppDbContext();
+
+            // Don't write that 'Where(x=>x....)' after .ToList() becuase ToList will execute the data from the table
+            // first then filter so
+            //do that before .ToList. Prepare the query first then execute it.
+      
+            // 'x' right here is similar to 'item' in foreach loop, but this is for query purpose only
+            var lst = db.Blogs.Where(x=>x.DeleteFlag == false).ToList();
+            foreach(var item in lst)
+            {
+                Console.WriteLine(item.BlogId);
+                Console.WriteLine(item.BlogTitle);
+                Console.WriteLine(item.BlogAuthor);
+                Console.WriteLine(item.BlogContent);
+            }
+
+        }
+
+
+        public void Create(string title, string author, string content)
+        {
+            BlogDataModel blog = new BlogDataModel
+            {
+                BlogTitle = title,
+                BlogAuthor = author,
+                BlogContent = content,
+
+            };
+            AppDbContext db = new AppDbContext();
+            db.Blogs.Add(blog);
+            var result = db.SaveChanges();
+
+            Console.WriteLine(result == 1 ? "Saving Successful" : "Saving Failed");
+            }
+
+        public void Edit(int id)
+        {
+            AppDbContext db = new AppDbContext();
+            // FirstOrDefault() can be before or after the WHERE clause:
+            //db.Blogs.Where(x => x.BlogId == id).FirstOrDefault();
+         var item = db.Blogs.FirstOrDefault(x => x.BlogId == id);
+            if (item is null)
+            {
+                Console.WriteLine("No data found");
+                return;
+            }
+            Console.WriteLine(item.BlogId);
+            Console.WriteLine(item.BlogTitle);
+            Console.WriteLine(item.BlogAuthor);
+            Console.WriteLine(item.BlogContent);
+
+        }
+
+        public void Update(int id, string title, string author, string content)
+        {
+    
+            AppDbContext db = new AppDbContext();
+
+            // => db.Blogs.FirstOrDefault(x => x.BlogId == id);
+            // becuase of that the data in the database will input into the 'item' variable
+            // so need to add this:
+            // = > db.Entry(item).State = EntityState.Modified;
+            //before  saving the data to the database, so the EFCore will know that the data in the 'item' variable as modified
+            //and will update the data in the database when calling the SaveChanges() method:
+            // => var result = db.SaveChanges();
+
+            //Note: only need to add this:
+            //             db.Entry(item).State = EntityState.Modified;
+            // if there is a '.AsNoTracking()' after the 'db.Blogs'
+            // because the 'AsNoTracking()' will make the EFCore not to track the data in the 'item' variable, so need to tell the EFCore that the data in the 'item' variable is modified.
+
+            var item = db.Blogs
+                .AsNoTracking()
+                .FirstOrDefault(x => x.BlogId == id);
+            if (item is null)
+            {
+                Console.WriteLine("No data found");
+                return;
+            }
+            if (!string.IsNullOrEmpty(title))
+            {
+                item.BlogTitle = title;
+            }
+
+            if (!string.IsNullOrEmpty(author))
+            {
+                item.BlogAuthor = author;
+            }
+
+            if (!string.IsNullOrEmpty(content))
+            {
+                item.BlogContent = content;
+            }
+
+            db.Entry(item).State = EntityState.Modified;
+            var result = db.SaveChanges();
+
+            Console.WriteLine(result == 1 ? "Saving Successful" : "Saving Failed");
+        }
+
+        public void Delete(int id)
+        {
+
+            AppDbContext db = new AppDbContext();
+            var item = db.Blogs
+                .AsNoTracking()
+                .FirstOrDefault(x => x.BlogId == id);
+            if(item is null)
+            {
+                Console.WriteLine("No data found)");
+                return;       
+            }
+
+            db.Entry(item).State = EntityState.Deleted;
+            var result = db.SaveChanges();
+            Console.WriteLine(result == 1 ? "Delete Successful" : "Delete Failed");
+        }
+
+    }
+}

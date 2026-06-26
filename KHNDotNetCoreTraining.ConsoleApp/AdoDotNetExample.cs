@@ -200,7 +200,7 @@ SELECT [BlogId]
 
 
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@BlogId", id;
+            cmd.Parameters.AddWithValue("@BlogId", id);
             cmd.Parameters.AddWithValue("@BlogTitle", title);
             cmd.Parameters.AddWithValue("@BlogAuthor", author);
             cmd.Parameters.AddWithValue("@BlogContent", content);
@@ -213,7 +213,38 @@ SELECT [BlogId]
             Console.WriteLine(result == 1 ? "Update successful" : "Update fail");
 
         }
-    
-    
+
+        public void Delete()
+        {
+
+            Console.WriteLine("Blog Id:");
+            string id = Console.ReadLine();
+
+            //   string connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
+            Console.WriteLine("Connection String : " + _connectionString);
+            SqlConnection connection = new SqlConnection(_connectionString);
+
+            Console.WriteLine("Connection Opening...");
+            connection.Open();
+            Console.WriteLine("Connection Opened");
+
+            string query = $@"
+DELETE FROM [dbo].[Tbl_Blog]
+      WHERE BlogId = @BlogId";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@BlogId", id);
+
+            int result = cmd.ExecuteNonQuery();
+
+
+            connection.Close();
+
+            Console.WriteLine(result == 1 ? "Delete Successful" : "Delete Failed ( ID not found )");
+
+
+        }
+
+
     }
 }
