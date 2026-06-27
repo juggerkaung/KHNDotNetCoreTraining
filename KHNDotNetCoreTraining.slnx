@@ -2,5 +2,8 @@
   <Folder Name="/Documents/">
     <File Path="README.md" />
   </Folder>
+  <Project Path="DotNetTrainingBatch5.ConsoleApp2/DotNetTrainingBatch5.ConsoleApp2.csproj" Id="e7649c39-4960-4aac-b7d4-a17d7c642484" />
+  <Project Path="DotNetTrainingBatch5.Database/DotNetTrainingBatch5.Database.csproj" Id="97af6875-13e0-4528-b19a-172f0c2c251c" />
+  <Project Path="DotNetTrainingBatch5.RestApi/DotNetTrainingBatch5.RestApi.csproj" Id="b78a4bf6-328c-4632-af44-ff2db7309bea" />
   <Project Path="KHNDotNetCoreTraining.ConsoleApp/KHNDotNetCoreTraining.ConsoleApp.csproj" />
 </Solution>

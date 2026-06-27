@@ -18,8 +18,6 @@ namespace KHNDotNetCoreTraining.ConsoleApp
             }
         }
 
-
-        // 
         public DbSet<BlogDataModel> Blogs { get; set; }
     }
 }
