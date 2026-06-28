@@ -102,11 +102,13 @@ Console.WriteLine("Hello, World!");
 // dapperExample.Edit(4);
 // dapperExample.Edit(5);
 
-EFCoreExample eFCoreExample = new EFCoreExample();
-//eFCoreExample.Read();
-eFCoreExample.Create("EFCoreCreate","2.EFcore","3.EFCORE");
+//=> EFCore
+//EFCoreExample eFCoreExample = new EFCoreExample();
+////eFCoreExample.Read();
+//eFCoreExample.Create("EFCoreCreate","2.EFcore","3.EFCORE");
 
-
+DapperExample2 dapperExample2 = new DapperExample2();
+dapperExample2.Read();
 
 Console.ReadKey();
 

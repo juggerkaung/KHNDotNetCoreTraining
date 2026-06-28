@@ -8,13 +8,13 @@ namespace KHNDotNetCoreTraining.ConsoleApp
 {
     public class AdoDotNetExample
     {
-// If declare at inside the class and at the top then start with '_'
-// => 'readonly' cannot be modified
+        // If declare at inside the class and at the top then start with '_'
+        // => 'readonly' cannot be modified
         private readonly string _connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
 
         public void Read()
         {
-         //   string connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
+            //   string connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
             Console.WriteLine("Connection String : " + _connectionString);
             SqlConnection connection = new SqlConnection(_connectionString);
 
@@ -28,8 +28,8 @@ namespace KHNDotNetCoreTraining.ConsoleApp
                   ,[BlogContent]
                   ,[DeleteFlag]
               FROM [dbo].[Tbl_Blog] WHERE DeleteFlag = 0";
-          //  Query or Command
-           SqlCommand cmd = new SqlCommand(query, connection);
+            //  Query or Command
+            SqlCommand cmd = new SqlCommand(query, connection);
 
             //Instead of this :
             //-----
@@ -160,7 +160,7 @@ SELECT [BlogId]
 
             connection.Close();
 
-            if(dt.Rows.Count == 0)
+            if (dt.Rows.Count == 0)
             {
                 Console.WriteLine("No Data Found");
                 return;
@@ -241,10 +241,6 @@ DELETE FROM [dbo].[Tbl_Blog]
             connection.Close();
 
             Console.WriteLine(result == 1 ? "Delete Successful" : "Delete Failed ( ID not found )");
-
-
         }
-
-
     }
 }

@@ -24,7 +24,7 @@ namespace DotNetTrainingBatch5.RestApi.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetBlog(int id)
         {
             var item = _db.TblBlogs.AsNoTracking().FirstOrDefault(x=>x.BlogId == id);
@@ -110,18 +110,19 @@ namespace DotNetTrainingBatch5.RestApi.Controllers
                 return NotFound();
             }
 
+            // Method 1 
+            // ---
             item.DeleteFlag = true;
             _db.Entry(item).State = EntityState.Modified;
+            // ---
 
-
+            // Method 2
            // _db.Entry(item).State = EntityState.Deleted;
+           // ---
+
             _db.SaveChanges();
             return Ok();
 
         }
-
-
-
-
     }
 }
