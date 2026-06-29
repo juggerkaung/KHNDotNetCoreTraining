@@ -52,6 +52,9 @@ REST API ( ASP.NET Core Web Api)
 - Http method
 - Http status code 
 
+Minimal API / [ado.net / dapper => custom service ]
+- 
+
 ---
 
 Backend API
@@ -97,3 +100,95 @@ DDL = Dynamic Link Library ( Might gonna use this in Service part )
             });
 
 ---
+=> this keyword:
+
+    // put static here to use 'this'
+    public static class BlogEndpoints
+    {
+        // 'this' keyword:
+        // that parameter move forward/front and instead of using this class in other file:
+        // BlogEndpoints.Test(9);
+        // Can use like this:
+        // 9.Test();
+        public static string Test(this int i)
+        {
+            return i.ToString();
+        }
+---
+
+=> global
+
+global using DotNetTrainingBatch5.Database.Models;
+
+the teacher create a file(GlobalUsing.cs) and take all the using file and put then in one.
+---
+[PACKAGE DOWNLOAD]
+=> Newtonsoft.Json ( 13.0.4)
+
+
+var blog = new BlogModel
+{
+    Id = 1,
+    Title = "Test Title",
+    Author = "Test Author",
+    Content = "Test Contenct",
+
+};
+string jsonStr = JsonConvert.SerializeObject(blog); // C# to JSON
+
+---
+=> Formatting.Indented:
+
+string jsonStr = JsonConvert.SerializeObject(blog, Formatting.Indented); // C# to JSON
+// Formatting.Indented is not that necessary unless don't want in format version.
+
+---
+=> Extension ( sometimes it's call : DevCode)
+Instead of writing like this : 
+
+ string jsonStr = JsonConvert.SerializeObject(blog, Formatting.Indented);
+
+ use Extension and create another class :
+ public static class Exentsions // DevCode
+{
+    public static string ToJson(this object obj)
+    {
+        string jsonStr = JsonConvert.SerializeObject(obj, Formatting.Indented); // C# to JSON
+        return jsonStr;
+
+    }
+}
+then we can use like this:
+string jsonStr = blog.ToJson(); 
+
+---
+
+=> DeserializeObject
+
+string jsonStr2 = """{"Id":1,"Title":"Test Title","Author":"Test Author","Content":"Test Contenct"}""";
+var blog2 = JsonConvert.DeserializeObject<BlogModel>(jsonStr2);
+
+Console.WriteLine(blog2.Title);
+???
+
+---
+
+=> Serialize and Deserialize
+
+Serialize =  turn the .NET object to JSON 
+Deserialze = turn the JSON object to C#/.NET Object
+
+
+string jsonStr2 = """{"Id":1,"Title":"Test Title","Author":"Test Author","Content":"Test Contenct"}""";
+var blog2 = JsonConvert.DeserializeObject<BlogModel>(jsonStr2);
+
+System.Text.Json.JsonSerializer.Serialize(blog); // Not casesensitive, the 'Test title' is still work instead of 'Test Title'
+System.Text.Json.JsonSerializer.Deserialize<BlogModel>(jsonStr2); // Case Sensitive
+
+---
+HW:
+Using JSON, Bind then product API
+
+---
+
+

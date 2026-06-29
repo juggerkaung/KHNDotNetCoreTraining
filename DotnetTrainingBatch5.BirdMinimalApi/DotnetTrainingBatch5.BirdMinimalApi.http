@@ -1,0 +1,6 @@
+@DotnetTrainingBatch5.BirdMinimalApi_HostAddress = http://localhost:5289
+
+GET {{DotnetTrainingBatch5.BirdMinimalApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
