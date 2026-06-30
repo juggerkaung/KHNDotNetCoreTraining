@@ -308,7 +308,22 @@ need to write those kind in async method:
             }
 ------------------------
 
-Rest Client 
+### Rest Client 
 
 has ExecuteAsync, where HTTP client doesn't has, that can execute that RestRequest..
+
+
+---
+
+### Refit
+
+after implementing the interface then it's can start the api:
+
+public interface IGitHubApi
+{
+   [Get("/users/{user}")]
+   Task<User> GetUser(string user);
+}
+
+---
 
