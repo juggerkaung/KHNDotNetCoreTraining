@@ -5,6 +5,7 @@
   <Project Path="DotnetTrainingBatch5.BirdMinimalApi/DotnetTrainingBatch5.BirdMinimalApi.csproj" Id="0cf81183-68b6-447e-b83e-642ef24b85a3" />
   <Project Path="DotNetTrainingBatch5.ConsoleApp2/DotNetTrainingBatch5.ConsoleApp2.csproj" Id="e7649c39-4960-4aac-b7d4-a17d7c642484" />
   <Project Path="DotNetTrainingBatch5.Database/DotNetTrainingBatch5.Database.csproj" Id="97af6875-13e0-4528-b19a-172f0c2c251c" />
+  <Project Path="DotNetTrainingBatch5.Domain/DotNetTrainingBatch5.Domain.csproj" Id="213bb43d-3fb3-4670-8388-535ac0d87bb6" />
   <Project Path="DotNetTrainingBatch5.MinimalApi/DotNetTrainingBatch5.MinimalApi.csproj" Id="701cf7b8-ef80-499c-b64a-34b3d4196f85" />
   <Project Path="DotNetTrainingBatch5.RestApi/DotNetTrainingBatch5.RestApi.csproj" Id="b78a4bf6-328c-4632-af44-ff2db7309bea" />
   <Project Path="DotNetTrainingBatch5.Shared/DotNetTrainingBatch5.Shared.csproj" Id="d45686a1-8ca5-4952-a59e-a5c2b28dfdaa" />

@@ -191,4 +191,85 @@ Using JSON, Bind then product API
 
 ---
 
+=> goto
+
+goto Result;
+
+It's use instead of many 'return' where it's need to jump from one to another by skpping.
+use that in other class before return where it's help in breakpoint. But it's may jump some code
+
+Result:
+return model;
+
+---
+
+=> Response Model
+
+???
+
+---
+
+=> JsonConvert
+( That is Object ( where object model will accept anything ) so cannot check key, so turn that into JSON, and then trun into obj )
+
+public IActionResult Execute(object model)
+{
+
+JObject jObj = JObject.Parse(JsonConvert.SeralizeObject(model)):
+if(jObj.ContainsKey("Response"))
+{
+
+BaseResponseModel baseResponseModel = JsonConvert.DeserailzeObject<BaseResponseModel>(
+jObj["Response"]!.ToString()!);
+
+if(baseResponseModel.RespType == EnumRespType.ValidatinError)
+return BadRequest(model);
+
+if(baseResponseModel.RespType == EnumRespType.SystemError)
+return StatusCode(500, model);
+
+return Ok(model);
+}}
+
+???
+IActionResult , JsonConvert.SeralizeObject , EnumRespType , BadRequest , StatusCode ?
+
+--------------------------------------------
+
+=> async, await , FirstOrDefaultAsync , .WhenAll , AddAsync , SaveChangesAsync , 
+
+???
+
+Is that one after another ? But with '.WhenAll'(model, model2) then it's will do parallel ?
+Is that support the performace ?
+
+----------------
+
+HttpClient  API
+
+HttpClient client = new HttpClient();
+
+Client Api which will go and connect with other api. Already Built-in dot.ent . 
+
+----------------------
+
+=> GetAsync
+
+var response = client.GetAsync("https://...");
+if(response.IsSuccessStatusCode)
+{
+  string jsonStr = await response.Content.ReadAsStringAsync();
+  Console.WriteLine(jsonStr);
+}
+
+----------------------------
+
+=> PostModel()
+
+PostModel model = new PostModel()
+{
+  body = body 
+};
+
+--------------------------------------------------------
 
