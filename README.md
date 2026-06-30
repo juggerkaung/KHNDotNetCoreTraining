@@ -243,15 +243,7 @@ IActionResult , JsonConvert.SeralizeObject , EnumRespType , BadRequest , StatusC
 Is that one after another ? But with '.WhenAll'(model, model2) then it's will do parallel ?
 Is that support the performace ?
 
-----------------
-
-HttpClient  API
-
-HttpClient client = new HttpClient();
-
-Client Api which will go and connect with other api. Already Built-in dot.ent . 
-
-----------------------
+--------------------------------------
 
 => GetAsync
 
@@ -272,4 +264,51 @@ PostModel model = new PostModel()
 };
 
 --------------------------------------------------------
+
+=> IEndpointRouteBuilder
+???
+
+=> IActionResult
+???
+
+-------
+HttpClient  API
+
+HttpClient client = new HttpClient();
+
+Client Api which will go and connect with other api. Already Built-in dot.ent . 
+---
+=> GetAsync("EndPoint/Resource");
+=> ReadAsStringAsync();
+
+HttpClient client = new HttpClient();
+var response = await client.GetAsync("https://jsonplaceholder.typicode.com/posts");
+if (response.IsSuccessStatusCode)
+{
+    string jsonStr = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(jsonStr);
+}
+
+need to write those kind in async method:
+
+   public async Task ReadAsync()
+        { ...}
+
+------------
+=> what is ! at the behind means ???
+
+        public async Task Read()
+        {
+            RestRequest request = new RestRequest("posts",Method.Get);
+            var response = await _client.GetAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonStr = response.Content!;
+                Console.WriteLine(jsonStr);
+            }
+------------------------
+
+Rest Client 
+
+has ExecuteAsync, where HTTP client doesn't has, that can execute that RestRequest..
 

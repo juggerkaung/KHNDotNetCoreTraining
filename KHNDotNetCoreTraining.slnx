@@ -9,5 +9,6 @@
   <Project Path="DotNetTrainingBatch5.MinimalApi/DotNetTrainingBatch5.MinimalApi.csproj" Id="701cf7b8-ef80-499c-b64a-34b3d4196f85" />
   <Project Path="DotNetTrainingBatch5.RestApi/DotNetTrainingBatch5.RestApi.csproj" Id="b78a4bf6-328c-4632-af44-ff2db7309bea" />
   <Project Path="DotNetTrainingBatch5.Shared/DotNetTrainingBatch5.Shared.csproj" Id="d45686a1-8ca5-4952-a59e-a5c2b28dfdaa" />
+  <Project Path="DotNetTraininngBatch5.ConsoleApp3/DotNetTraininngBatch5.ConsoleApp3.csproj" Id="f27e9d37-3432-40ec-9d53-9d0b4bee814d" />
   <Project Path="KHNDotNetCoreTraining.ConsoleApp/KHNDotNetCoreTraining.ConsoleApp.csproj" />
 </Solution>

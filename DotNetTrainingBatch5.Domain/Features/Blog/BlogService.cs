@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DotNetTrainingBatch5.Domain.Features.Blog
 {
+    // Business Logic  + Data Access
     public class BlogService
     {
         private readonly AppDbContext _db = new AppDbContext();

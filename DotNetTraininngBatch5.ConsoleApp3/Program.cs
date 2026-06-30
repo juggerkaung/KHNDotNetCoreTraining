@@ -1,0 +1,11 @@
+﻿using DotNetTraininngBatch5.ConsoleApp3;
+
+Console.WriteLine("Hello, World!");
+
+HttpClientExample httpClientExample = new HttpClientExample();
+//await httpClientExample.Read();
+//await httpClientExample.Edit(1);
+//await httpClientExample.Edit(101);
+
+//await httpClientExample.Create("test title", "test body", 1);
+await httpClientExample.Update(1, "test title", "test body", 10);
