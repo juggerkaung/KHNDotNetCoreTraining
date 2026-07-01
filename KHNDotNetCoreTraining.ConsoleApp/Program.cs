@@ -1,8 +1,9 @@
 ﻿using KHNDotNetCoreTraining.ConsoleApp;
+using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using System.Data.SqlClient;
 
-Console.WriteLine("Hello, World!");
+//Console.WriteLine("Hello, World!");
 
 // md => mark down
 // ( a little similar to html )
@@ -107,8 +108,14 @@ Console.WriteLine("Hello, World!");
 ////eFCoreExample.Read();
 //eFCoreExample.Create("EFCoreCreate","2.EFcore","3.EFCORE");
 
-DapperExample2 dapperExample2 = new DapperExample2();
-dapperExample2.Read();
+//DapperExample2 dapperExample2 = new DapperExample2();
+//dapperExample2.Read();
+
+var services = new ServiceCollection()
+    .AddSingleton<AdoDotNetExample>()
+    .BuildServiceProvider();
+
+var adoDotNetExample = services.GetRequiredService<AdoDotNetExample>();
+adoDotNetExample.Read();
 
 Console.ReadKey();
-

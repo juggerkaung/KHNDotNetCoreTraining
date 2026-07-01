@@ -327,3 +327,197 @@ public interface IGitHubApi
 
 ---
 
+### Dependency Injection
+
+1. Constructor Injection
+[ Inject in constructor ]
+
+2. Property Injection  
+[ using [inject] above the get set ]
+ 
+3. Method Injection
+
+[ Inject in method:
+   -> app.MapGet("/blogs", () =>
+   -> app.MapGet("/blogs", ([FromServices] AppDbContext db) =>
+]
+
+using DotNetTrainingBatch5.Database.Models;
+var builder = WebApplication.CreateBuilder(args);
+
+//UI -> BL -> DB
+// But it's reverse in here 
+// Create the 
+//1. 
+builder.Services.AddDbContext<AppDbContext>();
+
+---
+2.
+public partial class AppDbContext : DbContext
+{
+    public AppDbContext()
+    {
+    }
+
+    // generate the AppDbContext(Ctrl+.) , and it's will have 'options' which will have anything to input
+    public AppDbContext(DbContextOptions options) : base(options)
+    {
+    }
+---
+
+3. Can use like this:
+
+//UI -> BL -> DB
+// But it's reverse in here 
+// Create the 
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    // this configureation come/needtoinput'ConnectionStrings'  from/in appsettings.json 
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
+});
+
+instead of this:
+
+
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    if (!optionsBuilder.IsConfigured)
+    //    {
+    //        string connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;TrustServerCertificate=True";
+    //        optionsBuilder.UseSqlServer(connectionString);
+    //    }
+    //}
+
+-> Connectionstring should be dynamite where the one that will upload on server and the one on local may not be the same.
+Also, database, server, may change.
+
+---
+### Constructor Injection:
+
+after writing private readonly AppDbContext _db; then ctral+. and generate the constructor:
+
+        private readonly AppDbContext _db;
+then it's will product this: ( 
+        public BlogService(AppDbContext db)
+        {
+            _db = db;
+        }
+
+---
+=> AddScoped 
+builder.Services.AddScoped<BlogService>();
+
+---
+2. Method Injection:
+
+Instead of this:
+   app.MapGet("/blogs", () =>
+            {
+                AppDbContext db = new AppDbContext();
+                var model = db.TblBlogs.AsNoTracking().ToList();
+                return Results.Ok(model);
+
+            })
+
+it's will inject into method:
+
+
+            app.MapGet("/blogs", ([FromServices] AppDbContext db) =>
+            {
+                var model = db.TblBlogs.AsNoTracking().ToList();
+                return Results.Ok(model);
+
+            })
+                .WithName("GetBlogs")
+                .WithOpenApi();
+
+---
+3. Advantages of Dependency Injection 
+
+Swap with Interface to replace the eg: BlogService with BlogV2Service instead of replacing one by one:
+
+builder.Services.AddScoped<IBlogService, BlogV2Service>();
+
+    public interface IBlogService
+...
+    public class BlogV2Service : IBlogService
+...
+
+---
+
+4. To Use Dependency Injection, register first:
+
+//UI -> BL -> DB
+// But it's reverse in here 
+// Create the 
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    // this configureation come/needtoinput'ConnectionStrings'  from/in appsettings.json 
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
+});
+//builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<IBlogService, BlogV2Service>();
+
+---------
+
+### ASP.NET Core Service LifeTime
+
+1. Singleton
+2. Scoped
+3. .
+
+1. Singleton
+Only one service instance is created and shared across all requests.
+Be aware of concurrency and threading issues.
+It's use in helper, utility method where it's doesn't need to change. 
+Don't use in Service ( eg: blogservice ), where the requests are not going to be the same.
+eg: it's created in one :
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace KHNDotNetCoreTraining.ConsoleApp
+{
+    internal class AppSettings
+    {
+        public static string ConnectionString { get} = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
+    }
+}
+then can be used in others:
+        private readonly string _connectionString = AppSettings.ConnectionString;
+
+
+2. Scoped
+One service instance is created for each request and request throughout the request.
+Request is considered as scope.
+This is like scoped where it's will built and didn't do changes:
+private readonly string _connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
+
+
+
+3. Transient
+A new service instance is created every time even if it is the same request.
+It is most common and always the safest option if you are worried about multihreading.
+( In project, it's used in dbcontext where it's can created in every class to use that so if one is deleted but still the others 
+are work.
+blog => dbcontext , common service => dbcontext
+
+if dbcontext is deleted and remove from the memory then it's will also got removed in common service so 
+in big project it's  used with 'ServiceLifttime.Transient, ServiceLifetime.Transient'
+
+)
+connection is created in 'Create' but it's will also create in other, read,... 
+       public void Create()
+        {
+      ...
+            SqlConnection connection = new SqlConnection(_connectionString);
+That is Transient.
+
+
+
+
+
+
+
+
+

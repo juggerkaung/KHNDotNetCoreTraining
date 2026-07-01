@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetTrainingBatch5.RestApi.Controllers
+namespace DotNetTrainingBatch5.RestApi3.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -22,6 +22,5 @@ namespace DotNetTrainingBatch5.RestApi.Controllers
             })
             .ToArray();
         }
-
     }
 }

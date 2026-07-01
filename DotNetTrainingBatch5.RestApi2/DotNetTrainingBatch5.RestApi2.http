@@ -1,0 +1,6 @@
+@DotNetTrainingBatch5.RestApi2_HostAddress = http://localhost:5263
+
+GET {{DotNetTrainingBatch5.RestApi2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

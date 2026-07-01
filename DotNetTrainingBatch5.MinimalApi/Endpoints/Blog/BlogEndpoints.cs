@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.AspNetCore.Mvc;
+
 namespace DotNetTrainingBatch5.MinimalApi.Endpoints.Blog
 {
     // put static here to use 'this'
@@ -19,9 +21,8 @@ namespace DotNetTrainingBatch5.MinimalApi.Endpoints.Blog
         public static void UseMapBlogEndpoint(this IEndpointRouteBuilder app)
         {
 
-            app.MapGet("/blogs", () =>
+            app.MapGet("/blogs", ([FromServices] AppDbContext db) =>
             {
-                AppDbContext db = new AppDbContext();
                 var model = db.TblBlogs.AsNoTracking().ToList();
                 return Results.Ok(model);
 
@@ -29,11 +30,8 @@ namespace DotNetTrainingBatch5.MinimalApi.Endpoints.Blog
                 .WithName("GetBlogs")
                 .WithOpenApi();
 
-            app.MapGet("/blogs/{id}", (int id) =>
+            app.MapGet("/blogs/{id}", ([FromServices] AppDbContext db, int id) =>
             {
-
-                AppDbContext db = new AppDbContext();
-
                 var item = db.TblBlogs
                 .AsNoTracking()
                 .FirstOrDefault(x => x.BlogId == id);
@@ -49,9 +47,8 @@ namespace DotNetTrainingBatch5.MinimalApi.Endpoints.Blog
 
 
 
-            app.MapPost("/blogs", (TblBlog blog) =>
+            app.MapPost("/blogs", ([FromServices] AppDbContext db, TblBlog blog) =>
             {
-                AppDbContext db = new AppDbContext();
                 db.TblBlogs.Add(blog);
                 db.SaveChanges();
                 return Results.Ok(blog);
@@ -59,9 +56,8 @@ namespace DotNetTrainingBatch5.MinimalApi.Endpoints.Blog
                 .WithName("CreateBlog")
                 .WithOpenApi();
 
-            app.MapPut("/blogs/{id}", (int id, TblBlog blog) =>
+            app.MapPut("/blogs/{id}", ([FromServices] AppDbContext db, int id, TblBlog blog) =>
             {
-                AppDbContext db = new AppDbContext();
                 // Note: if used AsNoTracking in here then the SaveChanges will not work.
                 // but if added AsNoTracking then add this line:
                 // db.Entry(item).State = EntryState.Modified;
@@ -85,10 +81,8 @@ namespace DotNetTrainingBatch5.MinimalApi.Endpoints.Blog
                   .WithName("UpdateBlog")
                 .WithOpenApi();
 
-            app.MapDelete("/blogs/{id}", (int id) =>
+            app.MapDelete("/blogs/{id}", ([FromServices] AppDbContext db, int id) =>
             {
-                AppDbContext db = new AppDbContext();
-
                 var item = db.TblBlogs
                 .AsNoTracking()
                 .FirstOrDefault(x => x.BlogId == id);
